@@ -1,5 +1,5 @@
 // GET method
-app.get("/", (req, res) => {
+export const getAllTodo = app.get("/", (req, res) => {
   TodoTask.find({}, (err, tasks) => {
     res.render("todo.views", { todoTasks: tasks });
   });
@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 // });
 
 // POST method
-app.post("/", async (req, res) => {
+export const postTodo = app.post("/", async (req, res) => {
   const todoTask = new TodoTask({
     content: req.body.content,
   });
@@ -23,7 +23,7 @@ app.post("/", async (req, res) => {
 });
 
 // UPDATE method
-app
+export const updateTodo = app
   .route("/edit/:id")
   .get((req, res) => {
     const id = req.params.id;
@@ -40,7 +40,7 @@ app
   });
 
 // DELETE method
-app.route("/remove/:id").get((req, res) => {
+export const deleteTodo = app.route("/remove/:id").get((req, res) => {
   const id = req.params.id;
   TodoTask.findByIdAndRemove(id, (err) => {
     if (err) return res.send(500, err);

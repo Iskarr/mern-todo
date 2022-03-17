@@ -5,16 +5,22 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const TodoTask = require("./models/TodoTasks");
 require("dotenv").config({ path: ".env" });
+import {
+  getAllTodo,
+  postTodo,
+  updateTodo,
+  deleteTodo,
+} from "./controller/crud";
 
 // hide DB connection string
 dotenv.config();
 
 // connection to DB
-mongoose
-  .connect(process.env.DATABASE_CONNECT, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
+mongoose.connect(process.env.DATABASE_CONNECT, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
+
 // view engine configuration
 app.set("view engine", "ejs");
 app.use("/public", express.static("public"));
@@ -25,10 +31,6 @@ app.get("/", (req, res) => {
   TodoTask.find({}, (err, tasks) => {
     res.render("todo.ejs", { todoTasks: tasks });
   });
-});
-
-app.get("/color", (req, res) => {
-  res.render("test.views");
 });
 
 // POST method
